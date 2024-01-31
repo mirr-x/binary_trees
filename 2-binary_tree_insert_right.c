@@ -1,39 +1,28 @@
 #include <stdlib.h>
 #include "binary_trees.h"
 
-#define P parent
-#define N new_node
-#define NN NULL
-#define LP left
-#define RP right
-#define RT return
-#define ML malloc
-#define DS sizeof
-#define TP binary_tree_t
-#define V value
-#define RN parent->RP->parent = N
-#define PRLT parent->RP->LP = parent->RP->LP = parent->RP->LP = parent->RP->LP = N
 
-TP *binary_tree_insert_right(TP *P, int V)
+binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value)
 {
-    TP *N = ML(DS(TP));
-    if (N == NN)
-        RT(NN);
 
-    N->n = V;
-    N->P = P;
-    N->LP = NN;
-    N->RP = NN;
+    binary_tree_t *new_node = malloc(sizeof(binary_tree_t));
 
-    if (P->RP != NN)
+    if (new_node == NULL)
+        return(NULL);
+
+    new_node->n = value;
+    new_node->parent = parent;
+    new_node->left = NULL;
+    new_node->right = NULL;
+
+
+    if (parent->right != NULL)
     {
-        N->RP = P->RP;
-        RN;
+        new_node->right = parent->right;
+        parent->right->parent = new_node;
     }
 
-    P->RP = N;
+    parent->right = new_node;
 
-    PRLT;
-
-    RT(N);
+    return (new_node);
 }
